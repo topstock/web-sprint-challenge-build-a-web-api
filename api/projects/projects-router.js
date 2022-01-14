@@ -63,12 +63,20 @@ projectsRouter.put('/:id', validateProject, async (req, res) => {
   }
 });
 
-projectsRouter.delete('/:id', async (req, res) => {
+projectsRouter.delete('/:id', async (req, res, next) => {
+  const project = await Projects.get(req.params.id);
+  try {
+    if (!project) {
+     res.status(404).json({ message: "Project not found" });
+    }
+  } catch (error){
+    res.status(500).json({ message: error});
+  }
+  
   await Projects.remove(req.params.id);
   try {
     res.status(200).json();
   } catch (error){
-    console.error(error);
     res.status(500).json({ message: error});
   }
 });

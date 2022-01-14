@@ -4,11 +4,24 @@ const projectsRouter = express.Router();
 const Projects = require('./projects-model');
 const validateProject = require('./projects-middleware');
 
+projectsRouter.get('/:id/actions', async (req, res) => {
+  const actions = await Projects.getProjectActions(req.params.id);
+  try {
+    if (actions.length) {
+    res.status(200).json(actions);
+    } else {
+      res.status(404).json({ message: 'There is no project with that id.'})
+    }
+  } catch (error){
+      console.error(error);
+      res.status(500).json({ message: error});
+  }
+});
+
 projectsRouter.get('/:id', async (req, res) => {
   const project = await Projects.get(req.params.id);
   try {
     if (project) {
-    console.log({project});
     res.status(200).json(project);
     } else {
       res.status(404).json({ message: 'There is no project with that id.'})
@@ -34,11 +47,29 @@ projectsRouter.get('/', async (req, res) => {
 projectsRouter.post('/', validateProject, async (req, res) => {
   const newProject = await Projects.insert(req.body);
   try {
-    console.log({newProject});
-    res.status(200).json(newProject);
+    res.status(201).json(newProject);
   } catch (error){
-      console.error(error);
-      res.status(500).json({ message: error});
+    res.status(500).json({ message: error});
+  }
+});
+
+projectsRouter.put('/:id', validateProject, async (req, res) => {
+  const updatedProject = await Projects.update(req.params.id, req.body);
+  try {
+    res.status(200).json(updatedProject);
+  } catch (error){
+    console.error(error);
+    res.status(500).json({ message: error});
+  }
+});
+
+projectsRouter.delete('/:id', async (req, res) => {
+  await Projects.remove(req.params.id);
+  try {
+    res.status(200).json();
+  } catch (error){
+    console.error(error);
+    res.status(500).json({ message: error});
   }
 });
 

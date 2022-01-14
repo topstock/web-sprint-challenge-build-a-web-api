@@ -1,10 +1,6 @@
-function logger(req, res, next) {
-      console.log(`[$new Date().toISOString()}] ${req.method} to ${req.url} from ${req.get('Origin')}`)
+function logger(req, res, err, next) {
+      console.log(`[${new Date().toISOString()}] ${req.method} to ${req.url}`);
+      next();
 }
 
-function validateProject(req, res, next) {
-}
-
-function validateAction(req, res, next) {
-
-}
+module.exports = logger;

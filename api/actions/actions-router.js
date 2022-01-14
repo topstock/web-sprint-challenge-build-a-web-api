@@ -15,19 +15,19 @@ actionsRouter.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'There is no action with that id.'})
     }
   } catch (error){
-      console.error(error);
-      res.status(500).json({ message: error});
+    console.error(error);
+    res.status(500).json({ message: error});
   }
 });
 
 actionsRouter.get('/', async (req, res) => {
-    const actions = await Actions.get() || [];
-    try {
-      res.status(200).json(actions);
-    } catch (error){
-        console.error(error);
-        res.status(404)
-    }
+  const actions = await Actions.get() || [];
+  try {
+    res.status(200).json(actions);
+  } catch (error){
+    console.error(error);
+    res.status(404)
+  }
 });
 
 actionsRouter.post('/', validateAction, async (req, res, next) => {
@@ -48,7 +48,7 @@ actionsRouter.post('/', validateAction, async (req, res, next) => {
 });
 
 actionsRouter.put('/:id', validateAction, async (req, res) => {
-  const updatedAction = await actions.update(req.params.id, req.body);
+  const updatedAction = await Actions.update(req.params.id, req.body);
   try {
     res.status(200).json(updatedAction);
   } catch (error){
@@ -58,7 +58,7 @@ actionsRouter.put('/:id', validateAction, async (req, res) => {
 });
 
 actionsRouter.delete('/:id', async (req, res, next) => {
-  const action = await actions.get(req.params.id);
+  const action = await Actions.get(req.params.id);
   try {
     if (!action) {
      res.status(404).json({ message: "Action not found" });
@@ -67,7 +67,7 @@ actionsRouter.delete('/:id', async (req, res, next) => {
     res.status(500).json({ message: error});
   }
   
-  await actions.remove(req.params.id);
+  await Actions.remove(req.params.id);
   try {
     res.status(200).json();
   } catch (error){

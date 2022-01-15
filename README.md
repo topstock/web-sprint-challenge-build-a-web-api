@@ -65,20 +65,20 @@ Inside `api/projects/projects-router.js` build the following endpoints:
 
 Inside `api/actions/actions-router.js` build endpoints for performing CRUD operations on _actions_:
 
-- [ ] `[GET] /api/actions`
+- [X] `[GET] /api/actions`
   - Returns an array of actions (or an empty array) as the body of the response.
-- [ ] `[GET] /api/actions/:id`
+- [X] `[GET] /api/actions/:id`
   - Returns an action with the given `id` as the body of the response.
   - If there is no action with the given `id` it responds with a status code 404.
-- [ ] `[POST] /api/actions`
+- [X] `[POST] /api/actions`
   - Returns the newly created action as the body of the response.
   - If the request body is missing any of the required fields it responds with a status code 400.
   - When adding an action make sure the `project_id` provided belongs to an existing `project`.
-- [ ] `[PUT] /api/actions/:id`
+- [X] `[PUT] /api/actions/:id`
   - Returns the updated action as the body of the response.
   - If there is no action with the given `id` it responds with a status code 404.
   - If the request body is missing any of the required fields it responds with a status code 400.
-- [ ] `[DELETE] /api/actions/:id`
+- [X] `[DELETE] /api/actions/:id`
   - Returns no response body.
   - If there is no action with the given `id` it responds with a status code 404.
 
@@ -147,7 +147,47 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
-1. Understand and explain the use of Middleware.
-1. The basic principles of the REST architectural style.
-1. Understand and explain the use of Express Routers.
-1. Describe tooling used to manually test the correctness of an API.
+
+Answer:
+  Node.js: 
+   - Using JavaScript as same lang and paradigm for both CLient (React Apps) and Server prevents context switching!
+
+   - Being Single Threaded simplifies the order of completion of tasks. 
+
+   - It works asynchronously with the full advantages of using a single processor.
+
+   - NPM allows it to have access to a huge selection of modules which can extend its featurs as seen with HTTP.
+
+    - You can use Node's CLI to test Javascript code
+
+
+  Express
+    - Middlewares:  handle responses, requests, and errors unique to every endpoint or in different stacks of middlewares DRY, .
+    - Routing:  URL and HTTP method are used to select handlers, so each handler has a single responsibility. Modularizing is intuitive in Express.
+ 
+
+2. Understand and explain the use of Middleware.
+
+Answer: Middleware is code (function or module) which can be imported and connected into a series of pipleline processes of another module or function.  In Express and React, multiple types of middleware interact with different parts of important objects.  Middleware can be chained to sequentially read or alter the values of their hosts arguments in a one-directional flow.
+
+3. The basic principles of the REST architectural style.
+
+Answer:  
+
+ Everything is centered on the client and everyhting on the server is a resource
+ Each resource works through a uniqe URI, each the routes go through the same URL path
+ The server is stateless and only sends reactions through stateless HTTP methods. However the client holds onto information as the server is processing
+ The client can request at anytime and recieve actionable responses.
+
+4. Understand and explain the use of Express Routers.
+
+Answer:  
+
+Express routers enable different non-overlapping paths on the same parent domain.  They help organize request handlers by function and scope and improve modularity maintianig SCP.
+
+5. Describe tooling used to manually test the correctness of an API.
+
+
+Answer:
+
+Make sure you have the same versions of the dependencies that would be used in production.  Node makes it easy to test HTTP requests to an API.  SQLite is useful for monitoring the effectiveness of back-end request handlers.  Responses and Requests are easily viewed through HTTPie with the verbose flag, or Postman can be used to review that info. The react devtools in Chrome has a Network tab good place to review headers and cookies.  Devtools has a Application tab where you can review the cookies and other stored responses.
